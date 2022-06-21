@@ -2,13 +2,17 @@
 title: "Setting up a GitRepository"
 author: "Adam"
 date: '2022-06-21'
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 ![](https://yihui.org/knitr/images/knit-logo.png)
 
 ### knitr
 
-[knitr](https://yihui.org/knitr/) is a package for dynamic report generation that enables the integration of R code into LaTeX, LyX, HTML, Markdown, AsciiDoc, and reStructuredText documents. The purpose of knitr is to allow reproducible research in R through the means of literate programming. Additional extensions also exist for [python](https://rstudio.github.io/reticulate/articles/r_markdown.html) support. knitr is officially supported by RStudio.
+[knitr](https://yihui.org/knitr/) is a package for dynamic report generation that enables the integration of R code into LaTeX, LyX, HTML, Markdown, AsciiDoc, and reStructuredText documents. The purpose of knitr is to allow reproducible research in R through the means of literate programming. Additional extensions also exist for [python](https://rstudio.github.io/reticulate/articles/r_markdown.html) support. knitr is officially supported by [R Studio](https://support.rstudio.com/hc/en-us/articles/200552056-Using-Sweave-and-knitr) and can be executed to generate a HTML, PDF, or Word version of an R Markdown. 
+
+![](http://www.rstudio.com/images/docs/sweave_chunk.png)
 
 When writing a report, I recommend using [RMarkdown](https://rmarkdown.rstudio.com/lesson-2.html) to save and execute code in a format that lends itself to generating quality reports that can be shared with collaborators or in a GitRepository. Instructions for how to format can be found [here](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)
 
