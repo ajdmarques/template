@@ -1,0 +1,85 @@
+---
+title: "Setting up a GitRepository"
+author: "Adam"
+date: '2022-06-21'
+output: html_document
+---
+![](https://yihui.org/knitr/images/knit-logo.png)
+
+### knitr
+
+[knitr](https://yihui.org/knitr/) is a package for dynamic report generation that enables the integration of R code into LaTeX, LyX, HTML, Markdown, AsciiDoc, and reStructuredText documents. The purpose of knitr is to allow reproducible research in R through the means of literate programming. Additional extensions also exist for [python](https://rstudio.github.io/reticulate/articles/r_markdown.html) support. knitr is officially supported by RStudio.
+
+When writing a report, I recommend using [RMarkdown](https://rmarkdown.rstudio.com/lesson-2.html) to save and execute code ina  format that lends itself to generating quality reports that can be shared with collaborators or in a GitRepository. Instructions for how to format can be found [here](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)
+
+```{r setup, include=FALSE}
+library(knitr)
+# initialize knitr and set global functions
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+![](https://desktop.github.com/images/desktop-icon.svg)
+
+### Git
+
+[git](https://git-scm.com/) is an open source version control system, however, most users are likely familiar with [Github](https://github.com/) a great online tool for storing code and sharing with collaborators and/or the public. For daily work, however, I prefer to use [GitHub Desktop](https://desktop.github.com/), a graphical user interface for daily updates.
+
+Begin by [creating a new repository](https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/overview/creating-your-first-repository-using-github-desktop) in whatever working directory you wish to keep your files stored. Doing so enables you to record any changes made to the repository, changes to scripts, updated notes, removed files, etc. 
+
+![](https://docs.github.com/assets/cb-13221/images/help/desktop/getting-started-guide/viewing-changes.png) 
+
+To commit changes that have been made, you will need to generate a *Summary* of the changes made and corresponding *Description*. 
+
+![](https://docs.github.com/assets/cb-16055/images/help/desktop/getting-started-guide/commit-area.png) 
+
+By committing the changes you confirm that any changes made to the files in your repository are saved. These changes are then also saved and recorded in the repositories *History*.  
+
+![](https://docs.github.com/assets/cb-84829/images/help/desktop/getting-started-guide/history-view.png)
+Before proceeding, I recommend establishing a new [**Branches**](https://docs.github.com/en/desktop/contributing-and-collaborating-using-github-desktop/keeping-your-local-repository-in-sync-with-github/syncing-your-branch). By default, every repository begins in the the *main* branch, this is the default branch for your "finalized" version. While working on your scripts, however, you may wish to save your work incrementally without finalizing the progress. For this you can establish a new branch that is a mirror copy of the *main* branch.  
+
+![](https://docs.github.com/assets/cb-19560/images/help/desktop/current-branch-menu.png) 
+
+Branches can correspond can exist for any purpose, but one simple application is to ensure that each collaborator has their own branch. In this way, all collaborators can work on a project together, share the change without interfering with anyone else's progress. When ready to share your progress with others, you can **Push** your branch to the GitHub repository. This will upload the repository and all changes to the online storage so that other collaborators can see what you've done. If they wish to download a branch they can instead **Pull** from the GitHub repository to their local computer.
+
+![](https://docs.github.com/assets/cb-22694/images/help/desktop/push-origin-button.png) 
+
+When a new branch has been uploaded that differs from the main, a [Pull Request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) will be generated. Changes between two branches can be synchronized by [**Merging**](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/resolving-a-merge-conflict-on-github). In this process Git will compare each document and determine whether they can be successfully merged without conflict. In the case of a file removal or addition, this change will proceed un-interrupted. However, when there is a conflict, such as within the contents of a file, collaborators will be notified and asked to resolve the conflict. In the following example, Git highlights the specific lines of text that conflict.
+
+![](https://docs.github.com/assets/cb-41496/images/help/pull_requests/view-merge-conflict-with-markers.png)
+
+Once resolved, the two branches will be merged and the resulting synchronized brach is available for all collaborators to Pull from and continue their work.
+
+
+![](https://cdn1.iconfinder.com/data/icons/fs-icons-ubuntu-by-franksouza-light/128/inode-directory.png)
+
+### Repository Structure
+
+How you choose to structure your repository will depend on you, however, I recommend the following nested structure to make it easy to find and link to documents. Here are some examples of how I structure my repository.
+
+```{r Data, results='hide'}
+## Data 
+# store raw data and avoid altering files
+dir.create(c("./data/raw"), showWarnings = FALSE, recursive = TRUE)
+# store intermediate data for user manipulation
+dir.create(c("./data/intermediate"), showWarnings = FALSE, recursive = TRUE)
+# store final data for use in other documents
+dir.create(c("./data/final"), showWarnings = FALSE, recursive = TRUE)
+```
+
+```{r Documentation, results='hide'}
+# store protocols and information concerning, sampling, labwork, etc.  
+dir.create(c("./documentation/protocol"), showWarnings = FALSE, recursive = TRUE)
+# store any references, in particular save all references in a single BibTex format
+dir.create(c("./documentation/references"), showWarnings = FALSE, recursive = TRUE)
+# write the bibtex file and save package citations
+citPkgs <- names(sessionInfo()$otherPkgs)
+knitr::write_bib(citPkgs, file="./documentation/references/references.bib")
+```
+
+```{r Scripts, results='hide'}
+# save workflow as scripts and use a prefix to identify the order of operation, e.g. 01-initialize.Rmd
+dir.create(c("./scripts/analysis"), showWarnings = FALSE, recursive = TRUE)
+# save miscellaneous scripts that can be called on during the workflow, e.g. plot_table.R
+dir.create(c("./scripts/functions"), showWarnings = FALSE, recursive = TRUE)
+```
+
